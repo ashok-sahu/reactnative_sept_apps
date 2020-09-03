@@ -1,22 +1,24 @@
-import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
+import React, { useState, useEffect } from "react";
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
+import TravelAppRoute from "./src/Routings/Decode_routes/Travel_UI_Routes/navigation";
 
 export default function App() {
+  const [isFontLoad, setFontLoad] = useState(false);
+  useEffect(async () => {
+    await Font.loadAsync({
+      roboto: require("./src/assets/fonts/Roboto-Bold.ttf"),
+      poppins: require("./src/assets/fonts/Poppins-Bold.ttf"),
+      jura: require("./src/assets/fonts/Jura-VariableFont_wght.ttf"),
+    });
+    setFontLoad(true);
+  }, []);
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      {isFontLoad === true ? <TravelAppRoute /> : <AppLoading />}
+      <StatusBar />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
